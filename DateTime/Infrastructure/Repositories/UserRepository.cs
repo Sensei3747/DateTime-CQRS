@@ -22,18 +22,18 @@ internal sealed class UserRepository : IUserRepository
         _context.Set<User>().Add(user);
     }
 
-    public async Task<User?> GetByEmail(string email)
+    public async Task<User?> GetByName(string name)
     {
-        if (string.IsNullOrWhiteSpace(email))
+        if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            throw new ArgumentException("Email cannot be null or empty.", nameof(name));
         }
 
-        var user = await _context.Set<User>().Where(user => user.Email == email).FirstOrDefaultAsync();
+        var user = await _context.Set<User>().Where(user => user.Name == name).FirstOrDefaultAsync();
 
         return user;
     }
-    public async Task<User?> GetById(long id)
+    public async Task<User?> GetById(Guid id)
     {
         var user = await _context.Set<User>().FindAsync(id);
         return user;

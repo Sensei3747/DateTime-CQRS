@@ -6,18 +6,12 @@ namespace DateTime.Infrastructure.EntityConfigurations;
 
 public class UserConfigurations : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
-    {
-        builder.ToTable("User");
-        builder.HasKey(user => user.Id);
-        builder.Property(user => user.Id)
-               .ValueGeneratedOnAdd()
-               .IsRequired();
-        builder.Property(user => user.Email)
-               .IsRequired()
-               .HasMaxLength(100);
-        builder.Property(user => user.PasswordHash)
-               .IsRequired()
-               .HasMaxLength(100);;    
-    }
+       public void Configure(EntityTypeBuilder<User> builder)
+       {
+              builder.ToTable("User");
+              builder.HasKey(u => u.Id);
+              builder.Property(u => u.Name).IsRequired().HasMaxLength(100);
+              builder.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId).OnDelete(DeleteBehavior.Restrict);
+              builder.HasOne(u => u.Branch).WithMany().HasForeignKey(u => u.BranchId).OnDelete(DeleteBehavior.Restrict); 
+       }
 }

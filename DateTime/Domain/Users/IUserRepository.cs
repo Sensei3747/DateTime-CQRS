@@ -4,7 +4,7 @@ namespace DateTime.Domain.Users;
 public interface IUserRepository
 {
     void Add(User user);
-    Task<User?> GetByEmail(string email);
-    Task<User?> GetById(long id);
+    Task<User?> GetByName(string name);
+    Task<User?> GetById(Guid id);
     //Task<User?> GetByUsername(string username);
 }

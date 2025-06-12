@@ -1,12 +1,8 @@
-using DateTime.Application.Users.Login;
-using DateTime.Application.Users.Register;
 using DateTime.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using DateTime.Application.Program.AddProgram;
-using DateTime.Application.Program.GetPrograms;
-using DateTime.Domain.Abstractions;
+
 using DateTime.Application.ProgramRegistration.AddRegistration;
 
 namespace DateTime.API.Controllers.ProgramRegistration;
