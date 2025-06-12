@@ -1,5 +1,6 @@
 using DateTime.Domain.Abstractions;
 using DateTime.Domain.Branches;
+using DateTime.Domain.Participants;
 using DateTime.Domain.Permissions;
 using DateTime.Domain.Roles;
 using DateTime.Domain.Users;
@@ -18,6 +19,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
         public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
         public DbSet<Branch> Branches => Set<Branch>();
+        public DbSet<Participant> Participants => Set<Participant>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

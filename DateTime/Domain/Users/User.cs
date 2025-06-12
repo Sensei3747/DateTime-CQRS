@@ -13,11 +13,11 @@ public sealed class User
     public Branch Branch { get; set; } = null!;
     public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
 
-    private User()
+    public User()
     {
     }
 
-    private User(string name)
+    public User(string name)
     {
         Name = name;
     }

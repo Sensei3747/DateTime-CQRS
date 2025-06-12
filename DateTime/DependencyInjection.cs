@@ -14,6 +14,8 @@ using DateTime.Application.Abstractions.Clock;
 using DateTime.Infrastructure.Clock;
 using DateTime.Application.Abstractions.Timezone;
 using DateTime.Infrastructure.Timezone;
+using DateTime.Application.Abstractions.Services;
+using DateTime.Infrastructure.Services;
 
 namespace DateTime;
 
@@ -45,6 +47,7 @@ public static class DependencyInjection
         services.AddScoped<IProgramRegistrationRepository, ProgramRegistrationRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<ITimezoneHelper, TimezoneHelper>();
+        services.AddScoped<IPermissionChecker, PermissionChecker>();
 
         return services;
     }

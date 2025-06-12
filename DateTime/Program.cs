@@ -1,5 +1,7 @@
 using DateTime;
 using DateTime.Extensions;
+using DateTime.Infrastructure.Data;
+using DateTime.Infrastructure.Seeders;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,11 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope()) {
+  var ctx = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+  await DbSeeder.SeedAsync(ctx);
+}
 
 if (app.Environment.IsDevelopment())
 {

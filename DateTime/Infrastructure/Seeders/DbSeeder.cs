@@ -1,31 +1,39 @@
+using DateTime.Domain.Branches;
+using DateTime.Domain.Participants;
 using DateTime.Domain.Permissions;
 using DateTime.Domain.Roles;
+using DateTime.Domain.Users;
 using DateTime.Infrastructure.Data;
 
 namespace DateTime.Infrastructure.Seeders;
 
 public static class DbSeeder {
-  public static async Task SeedAsync(ApplicationDbContext ctx) {
-    if (!ctx.Permissions.Any()) {
+  public static async Task SeedAsync(ApplicationDbContext ctx)
+  {
+    if (!ctx.Permissions.Any())
+    {
       var perms = new[] { "ListParticipants", "CreateParticipant", "ViewParticipant", "RemoveParticipant", "AccessFinancialDetails" }
                   .Select(n => new Permission { Id = Guid.NewGuid(), Name = n }).ToList();
       ctx.Permissions.AddRange(perms);
       await ctx.SaveChangesAsync();
     }
 
-    if (!ctx.Roles.Any()) {
+    if (!ctx.Roles.Any())
+    {
       var roles = new[] { "Admin", "BranchManager", "Staff" }
                   .Select(n => new Role { Id = Guid.NewGuid(), Name = n }).ToList();
       ctx.Roles.AddRange(roles);
       await ctx.SaveChangesAsync();
     }
 
-    if (!ctx.Branches.Any()) {
-      ctx.Branches.Add(new Domain.Branches.Branch { Id = Guid.NewGuid(), Name = "Main Branch", LocationGroup = "Zone A" });
+    if (!ctx.Branches.Any())
+    {
+      ctx.Branches.Add(new Branch { Id = Guid.NewGuid(), Name = "Main Branch", LocationGroup = "Zone A" });
       await ctx.SaveChangesAsync();
     }
 
-    if (!ctx.RolePermissions.Any()) {
+    if (!ctx.RolePermissions.Any())
+    {
       var perms = ctx.Permissions.ToList();
       var roles = ctx.Roles.ToList();
 
@@ -43,11 +51,28 @@ public static class DbSeeder {
       await ctx.SaveChangesAsync();
     }
 
-    if (!ctx.Users.Any()) {
+    if (!ctx.Users.Any())
+    {
       var admin = ctx.Roles.Single(r => r.Name == "Admin");
       var branch = ctx.Branches.First();
-      ctx.Users.Add(new Domain.Users.User { Id = Guid.NewGuid(), Name = "Super Admin", RoleId = admin.Id, BranchId = branch.Id });
+      ctx.Users.Add(new User { Id = Guid.NewGuid(), Name = "Super Admin", RoleId = admin.Id, BranchId = branch.Id });
       await ctx.SaveChangesAsync();
     }
+    
+    if (!ctx.Participants.Any())
+    {
+    var user = ctx.Users.First();
+    var branch = ctx.Branches.First();
+
+    ctx.Participants.Add(new Participant
+    {
+        Id = Guid.NewGuid(),
+        Name = "Test User",
+        BranchId = branch.Id,
+        CreatedByUserId = user.Id
+    });
+
+    await ctx.SaveChangesAsync();
+}
   }
 }
