@@ -1,16 +1,17 @@
-using DateTime.Domain.Branches;
-using DateTime.Domain.Users;
+using DateTime.Domain.Models.Branches;
+using DateTime.Domain.Models.Users;
 
-namespace DateTime.Domain.Participants;
+namespace DateTime.Domain.Models.Participants;
+
 public class Participant
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; } = null!;
     public System.DateTime RegisteredAt { get; set; } = System.DateTime.UtcNow;
 
-    public Guid BranchId { get; set; }
+    public string BranchId { get; set; }
     public Branch Branch { get; set; } = null!;
 
-    public Guid CreatedByUserId { get; set; }
+    public string CreatedByUserId { get; set; }
     public User CreatedByUser { get; set; } = null!;
 }

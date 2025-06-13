@@ -1,9 +1,9 @@
 using DateTime.Domain.Abstractions;
-using DateTime.Domain.Branches;
-using DateTime.Domain.Participants;
-using DateTime.Domain.Permissions;
-using DateTime.Domain.Roles;
-using DateTime.Domain.Users;
+using DateTime.Domain.Models.Branches;
+using DateTime.Domain.Models.Participants;
+using DateTime.Domain.Models.Permissions;
+using DateTime.Domain.Models.Roles;
+using DateTime.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 

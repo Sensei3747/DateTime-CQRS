@@ -1,4 +1,4 @@
-using DateTime.Domain.Participants;
+using DateTime.Domain.Models.Participants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

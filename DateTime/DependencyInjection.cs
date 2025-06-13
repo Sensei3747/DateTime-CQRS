@@ -1,21 +1,21 @@
 using DateTime.Application.Abstractions.Auth;
 using DateTime.Application.Abstractions.Behaviors;
 using DateTime.Domain.Abstractions;
-using DateTime.Domain.ProgramRegistrations;
+using DateTime.Domain.Models.ProgramRegistrations;
 using DateTime.Infrastructure.Repositories;
 using DateTime.Infrastructure.Data;
 using DateTime.Infrastructure.Auth;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
-using DateTime.Domain.Users;
-using DateTime.Domain.Program;
+using DateTime.Domain.Models.Users;
+using DateTime.Domain.Models.Program;
 using DateTime.Application.Abstractions.Clock;
 using DateTime.Infrastructure.Clock;
 using DateTime.Application.Abstractions.Timezone;
 using DateTime.Infrastructure.Timezone;
 using DateTime.Application.Abstractions.Services;
-using DateTime.Infrastructure.Services;
+//using DateTime.Infrastructure.Services;
 
 namespace DateTime;
 
@@ -46,8 +46,8 @@ public static class DependencyInjection
         services.AddScoped<IProgramRepository, ProgramRepository>();
         services.AddScoped<IProgramRegistrationRepository, ProgramRegistrationRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<ITimezoneHelper, TimezoneHelper>();
-        services.AddScoped<IPermissionChecker, PermissionChecker>();
+        services.AddScoped<ITimezoneHelper, TimezoneHelper>(); 
+        //services.AddScoped<IPermissionChecker, PermissionChecker>();
 
         return services;
     }

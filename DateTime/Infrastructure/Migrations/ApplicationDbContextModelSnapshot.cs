@@ -17,16 +17,15 @@ namespace DateTime.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DateTime.Domain.Branches.Branch", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Branches.Branch", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LocationGroup")
                         .IsRequired()
@@ -43,17 +42,18 @@ namespace DateTime.Migrations
                     b.ToTable("Branches");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Participants.Participant", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Participants.Participant", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("BranchId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("BranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("CreatedByUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedByUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -72,11 +72,10 @@ namespace DateTime.Migrations
                     b.ToTable("Participants");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Permissions.Permission", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Permissions.Permission", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -88,13 +87,16 @@ namespace DateTime.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Permissions.RolePermission", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Permissions.RolePermission", b =>
                 {
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("PermissionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PermissionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Is_Granted")
+                        .HasColumnType("bit");
 
                     b.HasKey("RoleId", "PermissionId");
 
@@ -103,13 +105,13 @@ namespace DateTime.Migrations
                     b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Permissions.UserPermission", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Permissions.UserPermission", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("PermissionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PermissionId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "PermissionId");
 
@@ -118,7 +120,7 @@ namespace DateTime.Migrations
                     b.ToTable("UserPermissions");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Program.Programs", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Program.Programs", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,7 +155,7 @@ namespace DateTime.Migrations
                     b.ToTable("Programs", (string)null);
                 });
 
-            modelBuilder.Entity("DateTime.Domain.ProgramRegistrations.ProgramRegistration", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.ProgramRegistrations.ProgramRegistration", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,8 +176,9 @@ namespace DateTime.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("UserId1")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -186,57 +189,92 @@ namespace DateTime.Migrations
                     b.ToTable("ProgramRegistration");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Roles.Role", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Roles.Role", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("DateTime.Domain.Users.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BranchId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
 
-                    b.HasIndex("RoleId");
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DateTime.Domain.Models.Users.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Participants.Participant", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Participants.Participant", b =>
                 {
-                    b.HasOne("DateTime.Domain.Branches.Branch", "Branch")
+                    b.HasOne("DateTime.Domain.Models.Branches.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DateTime.Domain.Users.User", "CreatedByUser")
+                    b.HasOne("DateTime.Domain.Models.Users.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -247,15 +285,15 @@ namespace DateTime.Migrations
                     b.Navigation("CreatedByUser");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Permissions.RolePermission", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Permissions.RolePermission", b =>
                 {
-                    b.HasOne("DateTime.Domain.Permissions.Permission", "Permission")
+                    b.HasOne("DateTime.Domain.Models.Permissions.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DateTime.Domain.Roles.Role", "Role")
+                    b.HasOne("DateTime.Domain.Models.Roles.Role", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,15 +304,15 @@ namespace DateTime.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Permissions.UserPermission", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Permissions.UserPermission", b =>
                 {
-                    b.HasOne("DateTime.Domain.Permissions.Permission", "Permission")
+                    b.HasOne("DateTime.Domain.Models.Permissions.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DateTime.Domain.Users.User", "User")
+                    b.HasOne("DateTime.Domain.Models.Users.User", "User")
                         .WithMany("UserPermissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -285,15 +323,15 @@ namespace DateTime.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.ProgramRegistrations.ProgramRegistration", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.ProgramRegistrations.ProgramRegistration", b =>
                 {
-                    b.HasOne("DateTime.Domain.Program.Programs", "Program")
+                    b.HasOne("DateTime.Domain.Models.Program.Programs", "Program")
                         .WithMany("Registrations")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DateTime.Domain.Users.User", "User")
+                    b.HasOne("DateTime.Domain.Models.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,36 +342,28 @@ namespace DateTime.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Users.User", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Roles.Role", b =>
                 {
-                    b.HasOne("DateTime.Domain.Branches.Branch", "Branch")
+                    b.HasOne("DateTime.Domain.Models.Branches.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DateTime.Domain.Roles.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Branch");
-
-                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Program.Programs", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Program.Programs", b =>
                 {
                     b.Navigation("Registrations");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Roles.Role", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Roles.Role", b =>
                 {
                     b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Users.User", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Users.User", b =>
                 {
                     b.Navigation("UserPermissions");
                 });

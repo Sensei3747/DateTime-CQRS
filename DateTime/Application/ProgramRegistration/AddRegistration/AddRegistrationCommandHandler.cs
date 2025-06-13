@@ -1,7 +1,7 @@
 using DateTime.Application.Abstractions.Clock;
 using DateTime.Application.Abstractions.Messaging;
 using DateTime.Domain.Abstractions;
-using DateTime.Domain.ProgramRegistrations;
+using DateTime.Domain.Models.ProgramRegistrations;
 
 namespace DateTime.Application.ProgramRegistration.AddRegistration;
 
@@ -18,7 +18,7 @@ public class AddRegistrationCommandHandler : ICommandHandler<AddRegistrationComm
 
     public async Task<Result<string>> Handle(AddRegistrationCommand command, CancellationToken token)
     {
-        var registration = Domain.ProgramRegistrations.ProgramRegistration.Create(command.programId, command.UserId, command.location, _dateTimeProvider.UtcNow);
+        var registration = Domain.Models.ProgramRegistrations.ProgramRegistration.Create(command.programId, command.UserId, command.location, _dateTimeProvider.UtcNow);
         await _programRegistrationRepository.Add(registration);
         return $"Registration added with id : {registration.Id}";
     }

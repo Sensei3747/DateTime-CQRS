@@ -1,5 +1,5 @@
 using DateTime.Application.Abstractions.Messaging;
-using DateTime.Domain.Program;
+using DateTime.Domain.Models.Program;
 
 namespace DateTime.Application.Program.GetPrograms;
 

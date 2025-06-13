@@ -1,5 +1,5 @@
 using DateTime.Application.Abstractions.Timezone;
-using DateTime.Domain.Program;
+using DateTime.Domain.Models.Program;
 using DateTime.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

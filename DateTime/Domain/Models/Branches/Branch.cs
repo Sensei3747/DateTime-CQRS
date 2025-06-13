@@ -1,7 +1,8 @@
-namespace DateTime.Domain.Branches;
+namespace DateTime.Domain.Models.Branches;
 
-public class Branch {
-  public Guid Id { get; set; }
+public class Branch
+{
+  public string Id { get; set; }
   public string Name { get; set; } = null!;
   public string LocationGroup { get; set; } = null!;
 }

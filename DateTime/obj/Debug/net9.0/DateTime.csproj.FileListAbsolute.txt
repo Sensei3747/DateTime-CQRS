@@ -162,3 +162,8 @@ C:\Users\user\Desktop\DateTime\DateTime\obj\Debug\net9.0\DateTime.sourcelink.jso
 C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Razorpay.dll
 C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Stripe.net.dll
+C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\user\Desktop\DateTime\DateTime\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll

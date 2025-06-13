@@ -1,4 +1,4 @@
-using DateTime.Domain.Branches;
+using DateTime.Domain.Models.Branches;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

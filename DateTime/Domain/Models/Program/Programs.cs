@@ -1,6 +1,6 @@
-using DateTime.Domain.ProgramRegistrations;
+using DateTime.Domain.Models.ProgramRegistrations;
 
-namespace DateTime.Domain.Program;
+namespace DateTime.Domain.Models.Program;
 
 public class Programs
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using DateTime.Domain.Permissions;
+using DateTime.Domain.Models.Permissions;
 
 namespace DateTime.Infrastructure.EntityConfigurations;
 

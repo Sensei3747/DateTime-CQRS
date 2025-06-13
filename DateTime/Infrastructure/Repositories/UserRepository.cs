@@ -1,4 +1,4 @@
-using DateTime.Domain.Users;
+using DateTime.Domain.Models.Users;
 using DateTime.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,11 +29,11 @@ internal sealed class UserRepository : IUserRepository
             throw new ArgumentException("Email cannot be null or empty.", nameof(name));
         }
 
-        var user = await _context.Set<User>().Where(user => user.Name == name).FirstOrDefaultAsync();
+        var user = await _context.Set<User>().Where(user => user.UserName == name).FirstOrDefaultAsync();
 
         return user;
     }
-    public async Task<User?> GetById(Guid id)
+    public async Task<User?> GetById(string id)
     {
         var user = await _context.Set<User>().FindAsync(id);
         return user;

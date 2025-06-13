@@ -1,4 +1,4 @@
-namespace DateTime.Domain.Program;
+namespace DateTime.Domain.Models.Program;
 
 public class ProgramDto
 {

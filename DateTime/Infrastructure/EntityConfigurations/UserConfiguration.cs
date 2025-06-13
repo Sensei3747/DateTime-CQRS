@@ -1,4 +1,4 @@
-using DateTime.Domain.Users;
+using DateTime.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +8,6 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
 {
        public void Configure(EntityTypeBuilder<User> builder)
        {
-              builder.HasKey(u => u.Id);
-              builder.Property(u => u.Name).IsRequired().HasMaxLength(100);
-              builder.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId).OnDelete(DeleteBehavior.Restrict);
-              builder.HasOne(u => u.Branch).WithMany().HasForeignKey(u => u.BranchId).OnDelete(DeleteBehavior.Restrict); 
+               
        }
 }

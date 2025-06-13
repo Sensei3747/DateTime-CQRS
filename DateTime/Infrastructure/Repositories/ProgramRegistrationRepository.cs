@@ -1,4 +1,4 @@
-using DateTime.Domain.ProgramRegistrations;
+using DateTime.Domain.Models.ProgramRegistrations;
 using DateTime.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

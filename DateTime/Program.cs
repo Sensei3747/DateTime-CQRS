@@ -1,7 +1,12 @@
 using DateTime;
+using DateTime.Application.Abstractions.Auth;
+using DateTime.Domain.Models.Users;
 using DateTime.Extensions;
 using DateTime.Infrastructure.Data;
 using DateTime.Infrastructure.Seeders;
+using Microsoft.AspNetCore.Identity;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
@@ -31,7 +40,8 @@ var app = builder.Build();
 
 using(var scope = app.Services.CreateScope()) {
   var ctx = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-  await DbSeeder.SeedAsync(ctx);
+    var pass = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+  await DbSeeder.SeedAsync(ctx, pass);
 }
 
 if (app.Environment.IsDevelopment())

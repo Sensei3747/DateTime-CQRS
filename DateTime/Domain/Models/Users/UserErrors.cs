@@ -1,6 +1,6 @@
 using DateTime.Domain.Abstractions;
 
-namespace DateTime.Domain.Users;
+namespace DateTime.Domain.Models.Users;
 public static class UserErrors
 {
     public static Error AlreadyExists = Error.Conflict(

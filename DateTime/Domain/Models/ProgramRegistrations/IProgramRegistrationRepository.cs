@@ -1,4 +1,4 @@
-namespace DateTime.Domain.ProgramRegistrations;
+namespace DateTime.Domain.Models.ProgramRegistrations;
 
 public interface IProgramRegistrationRepository
 {

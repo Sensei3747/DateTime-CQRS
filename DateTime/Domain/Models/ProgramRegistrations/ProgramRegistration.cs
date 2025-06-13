@@ -1,8 +1,9 @@
 
-using DateTime.Domain.Program;
-using DateTime.Domain.Users;
+using DateTime.Domain.Models.Program;
+using DateTime.Domain.Models.Users;
 
-namespace DateTime.Domain.ProgramRegistrations;
+
+namespace DateTime.Domain.Models.ProgramRegistrations;
 
 public class ProgramRegistration
 {
