@@ -194,10 +194,6 @@ namespace DateTime.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BranchId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -209,8 +205,6 @@ namespace DateTime.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.ToTable("Roles");
                 });
 
@@ -221,6 +215,10 @@ namespace DateTime.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("BranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -262,6 +260,8 @@ namespace DateTime.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
 
                     b.ToTable("Users");
                 });
@@ -342,7 +342,7 @@ namespace DateTime.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Models.Roles.Role", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Users.User", b =>
                 {
                     b.HasOne("DateTime.Domain.Models.Branches.Branch", "Branch")
                         .WithMany()

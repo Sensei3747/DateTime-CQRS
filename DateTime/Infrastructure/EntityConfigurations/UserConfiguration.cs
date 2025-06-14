@@ -8,6 +8,6 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
 {
        public void Configure(EntityTypeBuilder<User> builder)
        {
-               
+              builder.HasOne(u => u.Branch).WithMany().HasForeignKey(u => u.BranchId).OnDelete(DeleteBehavior.Restrict);
        }
 }

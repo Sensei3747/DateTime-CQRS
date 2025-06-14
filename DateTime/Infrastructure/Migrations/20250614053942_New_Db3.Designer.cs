@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DateTime.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250613181541_New_Db2")]
-    partial class New_Db2
+    [Migration("20250614053942_New_Db3")]
+    partial class New_Db3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,10 +197,6 @@ namespace DateTime.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BranchId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -212,8 +208,6 @@ namespace DateTime.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.ToTable("Roles");
                 });
 
@@ -224,6 +218,10 @@ namespace DateTime.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("BranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -265,6 +263,8 @@ namespace DateTime.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
 
                     b.ToTable("Users");
                 });
@@ -345,7 +345,7 @@ namespace DateTime.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DateTime.Domain.Models.Roles.Role", b =>
+            modelBuilder.Entity("DateTime.Domain.Models.Users.User", b =>
                 {
                     b.HasOne("DateTime.Domain.Models.Branches.Branch", "Branch")
                         .WithMany()

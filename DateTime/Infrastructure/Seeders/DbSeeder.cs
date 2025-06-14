@@ -30,7 +30,7 @@ public static class DbSeeder
     if (!ctx.Roles.Any())
     {
       var roles = new[] { "Admin", "BranchManager", "Staff" }
-                  .Select(n => new Role { Id = Guid.NewGuid().ToString(), Name = n , BranchId = id}).ToList();
+                  .Select(n => new Role { Id = Guid.NewGuid().ToString(), Name = n}).ToList();
       ctx.Roles.AddRange(roles);
       await ctx.SaveChangesAsync();
     }
@@ -58,7 +58,7 @@ public static class DbSeeder
     {
       var admin = ctx.Roles.Single(r => r.Name == "Admin");
       var branch = ctx.Branches.First();
-      ctx.Users.Add(new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", PasswordHash = pass.HashPassword("1234")});
+      ctx.Users.Add(new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", PasswordHash = pass.HashPassword("1234"), BranchId = id});
       await ctx.SaveChangesAsync();
     }
 

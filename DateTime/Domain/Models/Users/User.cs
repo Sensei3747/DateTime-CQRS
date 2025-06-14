@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 namespace DateTime.Domain.Models.Users;
 public class User : IdentityUser
 {
+    public string BranchId { get; set; }
+    public Branch Branch { get; set; }
     public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
 
     public User()
