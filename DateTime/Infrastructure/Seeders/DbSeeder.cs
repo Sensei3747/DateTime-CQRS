@@ -5,12 +5,13 @@ using DateTime.Domain.Models.Permissions;
 using DateTime.Domain.Models.Roles;
 using DateTime.Domain.Models.Users;
 using DateTime.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace DateTime.Infrastructure.Seeders;
 
 public static class DbSeeder
 {
-  public static async Task SeedAsync(ApplicationDbContext ctx, IPasswordHasher pass)
+  public static async Task SeedAsync(ApplicationDbContext ctx, IPasswordHasher pass, UserManager<User> manager)
   {
     if (!ctx.Permissions.Any())
     {
@@ -30,7 +31,7 @@ public static class DbSeeder
     if (!ctx.Roles.Any())
     {
       var roles = new[] { "Admin", "BranchManager", "Staff" }
-                  .Select(n => new Role { Id = Guid.NewGuid().ToString(), Name = n}).ToList();
+                  .Select(n => new Role { Id = Guid.NewGuid().ToString(), Name = n, NormalizedName = n.ToUpper()}).ToList();
       ctx.Roles.AddRange(roles);
       await ctx.SaveChangesAsync();
     }
@@ -58,8 +59,10 @@ public static class DbSeeder
     {
       var admin = ctx.Roles.Single(r => r.Name == "Admin");
       var branch = ctx.Branches.First();
-      ctx.Users.Add(new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", PasswordHash = pass.HashPassword("1234"), BranchId = id});
+      var user = new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", PasswordHash = pass.HashPassword("1234"), BranchId = id  };
+      ctx.Users.Add(user);
       await ctx.SaveChangesAsync();
+      await manager.AddToRoleAsync(user, admin.Name);
     }
 
     if (!ctx.Participants.Any())

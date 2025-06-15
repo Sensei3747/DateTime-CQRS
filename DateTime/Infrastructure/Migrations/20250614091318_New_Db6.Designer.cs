@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DateTime.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250614053942_New_Db3")]
-    partial class New_Db3
+    [Migration("20250614091318_New_Db6")]
+    partial class New_Db6
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

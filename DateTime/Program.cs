@@ -1,5 +1,6 @@
 using DateTime;
 using DateTime.Application.Abstractions.Auth;
+using DateTime.Domain.Models.Roles;
 using DateTime.Domain.Models.Users;
 using DateTime.Extensions;
 using DateTime.Infrastructure.Data;
@@ -15,7 +16,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -38,10 +39,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope()) {
-  var ctx = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var pass = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-  await DbSeeder.SeedAsync(ctx, pass);
+    var manager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    await DbSeeder.SeedAsync(ctx, pass, manager);
 }
 
 if (app.Environment.IsDevelopment())

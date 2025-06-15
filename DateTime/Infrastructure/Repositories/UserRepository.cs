@@ -1,5 +1,6 @@
 using DateTime.Domain.Models.Users;
 using DateTime.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DateTime.Infrastructure.Repositories;
@@ -7,19 +8,21 @@ namespace DateTime.Infrastructure.Repositories;
 internal sealed class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<User> _manager;
 
-    public UserRepository(ApplicationDbContext dbContext)
+    public UserRepository(ApplicationDbContext dbContext, UserManager<User> manager)
     {
         _context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        _manager = manager ?? throw new ArgumentNullException(nameof(manager));
     }
 
-    public void Add(User user)
+    public async Task Add(User user, string password)
     {
         if (user == null)
         {
             throw new ArgumentNullException(nameof(user), "User cannot be null.");
         }
-        _context.Set<User>().Add(user);
+        await _manager.CreateAsync(user, password);
     }
 
     public async Task<User?> GetByName(string name)
@@ -38,9 +41,9 @@ internal sealed class UserRepository : IUserRepository
         var user = await _context.Set<User>().FindAsync(id);
         return user;
     }
-    // public async Task<User?> GetByUsername(string username)
-    // {
-    //     var user = await _context.Set<User>().Where(user => user.Username == username).FirstOrDefaultAsync();
-    //     return user;
-    // }
+    public async Task<User?> GetByEmail(string email)
+    {
+        var user = await _manager.FindByEmailAsync(email);
+        return user;
+    }
 }

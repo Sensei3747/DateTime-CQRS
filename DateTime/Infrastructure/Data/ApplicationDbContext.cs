@@ -4,6 +4,7 @@ using DateTime.Domain.Models.Participants;
 using DateTime.Domain.Models.Permissions;
 using DateTime.Domain.Models.Roles;
 using DateTime.Domain.Models.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 

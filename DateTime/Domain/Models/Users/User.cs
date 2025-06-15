@@ -14,16 +14,15 @@ public class User : IdentityUser
     {
     }
 
-    public User(string name, string passhash, string email)
+    public User(string name,string email)
     {
         UserName = name;
-        PasswordHash = passhash;
         Email = email;
     }
 
-    public static User Create(string name, string passhash, string email)
+    public static User Create(string name,string email)
     {
-        var user = new User(name, passhash, email);
+        var user = new User(name,email);
         return user;
     }
 }
