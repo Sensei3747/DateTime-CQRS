@@ -26,7 +26,7 @@ public class ProgramRepository : IProgramRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Programs?> GetById(long id)
+    public async Task<Programs?> GetById(string id)
     {
         var program = await _context.Set<Programs>().Where(pgm => pgm.Id == id).FirstOrDefaultAsync();
         return program;

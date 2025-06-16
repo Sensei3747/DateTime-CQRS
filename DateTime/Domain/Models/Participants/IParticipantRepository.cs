@@ -6,4 +6,5 @@ public interface IParticipantRepository
     Task<List<ParticipantDto>> GetByBranchId(string branchId);
     Task<ParticipantDto> GetByName(string name);
     void Delete(string name);
+    Task<List<ParticipantDto>> GetByUserId(string userId);
 }

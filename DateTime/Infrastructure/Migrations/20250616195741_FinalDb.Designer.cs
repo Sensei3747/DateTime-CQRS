@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DateTime.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250615081603_AddIdentityTables")]
-    partial class AddIdentityTables
+    [Migration("20250616195741_FinalDb")]
+    partial class FinalDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,7 +98,7 @@ namespace DateTime.Migrations
                     b.Property<string>("PermissionId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Is_Granted")
+                    b.Property<bool>("IsGranted")
                         .HasColumnType("bit");
 
                     b.HasKey("RoleId", "PermissionId");
@@ -125,11 +125,11 @@ namespace DateTime.Migrations
 
             modelBuilder.Entity("DateTime.Domain.Models.Program.Programs", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<string>("Id"));
 
                     b.Property<System.DateTime>("EndTime")
                         .HasColumnType("datetime2");
@@ -160,23 +160,27 @@ namespace DateTime.Migrations
 
             modelBuilder.Entity("DateTime.Domain.Models.ProgramRegistrations.ProgramRegistration", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<string>("Id"));
+
+                    b.Property<string>("BranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ProgramId")
+                    b.Property<string>("ProgramId")
                         .HasColumnType("bigint");
 
                     b.Property<System.DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("UserId")
+                    b.Property<string>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId1")
@@ -184,6 +188,8 @@ namespace DateTime.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
 
                     b.HasIndex("ProgramId");
 
@@ -455,6 +461,12 @@ namespace DateTime.Migrations
 
             modelBuilder.Entity("DateTime.Domain.Models.ProgramRegistrations.ProgramRegistration", b =>
                 {
+                    b.HasOne("DateTime.Domain.Models.Branches.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DateTime.Domain.Models.Program.Programs", "Program")
                         .WithMany("Registrations")
                         .HasForeignKey("ProgramId")
@@ -466,6 +478,8 @@ namespace DateTime.Migrations
                         .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Branch");
 
                     b.Navigation("Program");
 

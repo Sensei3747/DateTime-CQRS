@@ -1,3 +1,3 @@
 namespace DateTime.API.Controllers.ProgramRegistration;
 
-public record AddRegistrationRequest(long programId, long UserId, string location);
+public record AddRegistrationRequest(string programId, string UserId, string location, string branchId);

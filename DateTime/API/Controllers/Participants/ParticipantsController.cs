@@ -52,4 +52,16 @@ public class ParticipantsController : ControllerBase
     }
     return Ok(result.Value);
   }
+
+  [HttpPost("Role")]
+  public async Task<IActionResult> Role(string userId)
+  {
+    var query = new GetParticipantsForUserTypeQuery(userId);
+    var result = await _sender.Send(query);
+    if (result.IsFailure)
+    {
+      return result.Error.ToActionResult();
+    }
+    return Ok(result.Value);
+  }
 }

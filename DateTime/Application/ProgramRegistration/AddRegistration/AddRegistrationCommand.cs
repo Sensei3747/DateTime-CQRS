@@ -3,4 +3,4 @@ using DateTime.Application.Abstractions.Messaging;
 
 namespace DateTime.Application.ProgramRegistration.AddRegistration;
 
-public record AddRegistrationCommand(long programId, long UserId, string location): ICommand<string>;
+public record AddRegistrationCommand(string programId, string UserId, string location, string branchId) : ICommand<string>;

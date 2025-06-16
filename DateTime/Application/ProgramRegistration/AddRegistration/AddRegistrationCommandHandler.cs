@@ -18,7 +18,7 @@ public class AddRegistrationCommandHandler : ICommandHandler<AddRegistrationComm
 
     public async Task<Result<string>> Handle(AddRegistrationCommand command, CancellationToken token)
     {
-        var registration = Domain.Models.ProgramRegistrations.ProgramRegistration.Create(command.programId, command.UserId, command.location, _dateTimeProvider.UtcNow);
+        var registration = Domain.Models.ProgramRegistrations.ProgramRegistration.Create(command.programId, command.UserId, command.location,command.branchId, _dateTimeProvider.UtcNow);
         await _programRegistrationRepository.Add(registration);
         return $"Registration added with id : {registration.Id}";
     }

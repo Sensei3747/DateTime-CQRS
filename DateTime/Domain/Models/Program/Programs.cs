@@ -4,7 +4,7 @@ namespace DateTime.Domain.Models.Program;
 
 public class Programs
 {
-    public long Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
     public string Location { get; set; }
     public System.DateTime StartTime { get; set; }
