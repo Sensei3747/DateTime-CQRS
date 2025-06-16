@@ -16,13 +16,14 @@ internal sealed class UserRepository : IUserRepository
         _manager = manager ?? throw new ArgumentNullException(nameof(manager));
     }
 
-    public async Task Add(User user, string password)
+    public async Task<IdentityResult> Add(User user, string password)
     {
         if (user == null)
         {
             throw new ArgumentNullException(nameof(user), "User cannot be null.");
         }
-        await _manager.CreateAsync(user, password);
+        var result = await _manager.CreateAsync(user, password);
+        return result;
     }
 
     public async Task<User?> GetByName(string name)

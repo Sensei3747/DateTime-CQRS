@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DateTime.Infrastructure.Data;
 
-public sealed class ApplicationDbContext : DbContext, IUnitOfWork
+public sealed class ApplicationDbContext : IdentityDbContext<User, Role, string>, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }

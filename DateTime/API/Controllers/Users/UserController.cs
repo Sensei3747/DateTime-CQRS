@@ -22,7 +22,7 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterUser request)
     {
-        var command = new RegisterUserCommand(request.email, request.UserName, request.password, request.role);
+        var command = new RegisterUserCommand(request.email, request.UserName, request.password, request.role, request.branchId);
         var result = await _sender.Send(command);
         if (result.IsFailure)
         {

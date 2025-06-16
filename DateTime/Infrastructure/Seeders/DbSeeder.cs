@@ -59,10 +59,17 @@ public static class DbSeeder
     {
       var admin = ctx.Roles.Single(r => r.Name == "Admin");
       var branch = ctx.Branches.First();
-      var user = new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", PasswordHash = pass.HashPassword("1234"), BranchId = id  };
-      ctx.Users.Add(user);
-      await ctx.SaveChangesAsync();
-      await manager.AddToRoleAsync(user, admin.Name);
+      var user = new User { Id = Guid.NewGuid().ToString(), UserName = "Super Admin", Email = "admin@gmail.com", BranchId = id };
+      var result = await manager.CreateAsync(user, "1234");
+      if (result.Succeeded)
+      {
+        var savedUser = await manager.FindByEmailAsync(user.Email);
+        await manager.AddToRoleAsync(user, admin.Name);
+      }
+      else
+      {
+        throw new Exception("Failed to create user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+      }
     }
 
     if (!ctx.Participants.Any())
@@ -72,7 +79,6 @@ public static class DbSeeder
 
       ctx.Participants.Add(new Participant
       {
-        Id = Guid.NewGuid().ToString(),
         Name = "Test User",
         BranchId = branch.Id,
         CreatedByUserId = user.Id

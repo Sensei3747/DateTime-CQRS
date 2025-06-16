@@ -25,10 +25,31 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, s
         {
             return Result.Failure<string>(UserErrors.AlreadyExists);
         }
-        var user = User.Create(command.userName, command.email);
-        await _userRepository.Add(user, command.password);
-        await _manager.AddToRoleAsync(user, command.role);
-        await _unitOfWork.SaveChangesAsync();
-        return user.Email;
+
+        var user = User.Create(command.userName, command.email, command.branchId);
+        var result = await _userRepository.Add(user, command.password);
+
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"{error.Code}: {error.Description}");
+            }
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            return Result.Failure<string>("Failure1");
+        }
+
+        var roleResult = await _manager.AddToRoleAsync(user, command.role);
+        if (!roleResult.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"{error.Code}: {error.Description}");
+            }
+            var errors = string.Join(", ", roleResult.Errors.Select(e => e.Description));
+            return Result.Failure<string>("Failure2");
+        }
+
+        return Result.Success(user.Email);
     }
 }

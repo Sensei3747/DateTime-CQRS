@@ -14,4 +14,21 @@ public class Participant
 
     public string CreatedByUserId { get; set; }
     public User CreatedByUser { get; set; } = null!;
+
+    public Participant() { }
+
+    public Participant(string name, string branchId, string createdByUserId)
+    {
+        Id = Guid.NewGuid().ToString();
+        Name = name;
+        BranchId = branchId;
+        CreatedByUserId = createdByUserId;
+    }
+
+    public static Participant Create(string name, string branchId, string createdByUserId)
+    {
+        var participant = new Participant(name, branchId, createdByUserId);
+        return participant;
+    }
+
 }
